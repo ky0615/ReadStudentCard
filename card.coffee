@@ -49,8 +49,8 @@ class Card
         post_data = JSON.stringify card
         console.log post_data
         post_req = http.request
-            host: "localhost"
-            port: "1451"
+            host: "nizuki.cloudapp.net"
+            port: "80"
             path: "/attend"
             method: 'POST'
             headers:
