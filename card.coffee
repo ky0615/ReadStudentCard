@@ -3,6 +3,14 @@ pasori = new pafe.Pasori()
 
 http = require "http"
 
+wpi = require "wiring-pi"
+
+pin = 1
+wpi.setup "wpi"
+wpi.pinMode pin, wpi.OUTPUT
+
+wpi.softToneCreate pin
+
 class Card
     idmCache = "a"
 
@@ -45,7 +53,7 @@ class Card
         catch e
             console.log e
 
-    sendCardData: (card)->
+    sendCardData: (card)=>
         post_data = JSON.stringify card
         console.log post_data
         post_req = http.request
@@ -56,14 +64,33 @@ class Card
             headers:
                 'Content-Type': 'application/json'
                 'Content-Length': Buffer.byteLength(post_data)
-        , (res)->
+        , (res)=>
             res.setEncoding "utf8"
-            res.on "data", (chunk)->
-                console.log chunk
+            res.on "data", (chunk)=>
+                data = JSON.parse chunk
+                console.log data
+                unless data.leftFlag
+                    # now
+                    @toneSingle 250
+                else
+                    # left
+                    @toneDouble()
 
         post_req.write post_data
         post_req.end()
 
+    toneStart: ->
+        wpi.softToneWrite pin, 349*4
+    toneStop: ->
+        wpi.softToneWrite pin, 0
+    toneSingle: (ms)->
+        @toneStart()
+        setTimeout @toneStop, ms
+    toneDouble: ->
+        @toneStart()
+        setTimeout @toneStop, 100
+        setTimeout @toneStart, 200
+        setTimeout @toneStop, 450
 
 card = new Card()
 

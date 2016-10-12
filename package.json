@@ -10,6 +10,7 @@
   "license": "GPL-2.0",
   "dependencies": {
     "libpafe": "git+https://github.com/ky0615/node-libpafe.git",
-    "nan": "^2.4.0"
+    "nan": "^2.4.0",
+    "wiring-pi": "^2.2.0"
   }
 }
