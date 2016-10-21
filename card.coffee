@@ -57,16 +57,18 @@ class Card
         post_data = JSON.stringify card
         console.log post_data
         post_req = http.request
-            host: "nizuki.cloudapp.net"
-            port: "80"
+            host: "kokoiru.linux.moe"
+            port: "443"
             path: "/attend"
             method: 'POST'
             headers:
                 'Content-Type': 'application/json'
                 'Content-Length': Buffer.byteLength(post_data)
+                "Authorization": "Basic dGR1ZmU6dGR1ZmU="
         , (res)=>
             res.setEncoding "utf8"
             res.on "data", (chunk)=>
+                console.log chunk
                 data = JSON.parse chunk
                 console.log data
                 unless data.leftFlag
