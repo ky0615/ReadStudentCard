@@ -1,7 +1,7 @@
 pafe = require "libpafe"
 pasori = new pafe.Pasori()
 
-http = require "http"
+request = require "request-promise"
 
 wpi = require "wiring-pi"
 
@@ -54,32 +54,21 @@ class Card
             console.log e
 
     sendCardData: (card)=>
-        post_data = JSON.stringify card
-        console.log post_data
-        post_req = http.request
-            host: "kokoiru.linux.moe"
-            port: "443"
-            path: "/attend"
-            method: 'POST'
+        request
+            method: "POST"
+            uri: "https://kokoiru.linux.moe/attend"
+            json: true
             headers:
-                'Content-Type': 'application/json'
-                'Content-Length': Buffer.byteLength(post_data)
                 "Authorization": "Basic dGR1ZmU6dGR1ZmU="
-        , (res)=>
-            res.setEncoding "utf8"
-            res.on "data", (chunk)=>
-                console.log chunk
-                data = JSON.parse chunk
-                console.log data
-                unless data.leftFlag
-                    # now
-                    @toneSingle 250
-                else
-                    # left
-                    @toneDouble()
-
-        post_req.write post_data
-        post_req.end()
+            body: card
+        .then (res)->
+            console.log res
+            unless res.leftFlag
+                # now
+                @toneSingle 250
+            else
+                # left
+                @toneDouble()
 
     toneStart: ->
         wpi.softToneWrite pin, 349*4
