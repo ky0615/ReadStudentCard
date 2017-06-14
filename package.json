@@ -13,6 +13,6 @@
     "nan": "^2.4.0",
     "request": "^2.75.0",
     "request-promise": "^4.1.1",
-    "wiring-pi": "^2.2.0"
+    "wiring-pi": "https://github.com/WiringPi/WiringPi-Node"
   }
 }

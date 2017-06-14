@@ -61,7 +61,7 @@ class Card
             headers:
                 "Authorization": "Basic dGR1ZmU6dGR1ZmU="
             body: card
-        .then (res)->
+        .then (res)=>
             console.log res
             unless res.leftFlag
                 # now
