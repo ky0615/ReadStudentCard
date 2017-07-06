@@ -14,6 +14,8 @@ wpi.softToneCreate pin
 class Card
     idmCache = "a"
 
+    toneCount = 0
+
     readCard: =>
         # console.log "start read card"
         try
@@ -24,7 +26,7 @@ class Card
                   @readCard()
                   return
               idm = felica.getIDm()
-              setTimeout @readCard, 500
+              setTimeout @readCard, 1500
               if idm is idmCache
                   # console.log "Same card"
                   return
@@ -75,9 +77,12 @@ class Card
                 @toneDouble()
 
     toneStart: ->
+        @toneCount++
         wpi.softToneWrite pin, 349*4
     toneStop: ->
-        wpi.softToneWrite pin, 0
+        if @toneCount is 1
+          wpi.softToneWrite pin, 0
+        @toneCount--
     toneSingle: (ms)->
         @toneStart()
         setTimeout @toneStop, ms
