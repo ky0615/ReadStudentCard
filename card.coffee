@@ -16,22 +16,26 @@ class Card
 
     readCard: =>
         # console.log "start read card"
-        pasori.setTimeout 100
-        pasori.polling 0xFE00, 0, (felica)=>
-            unless felica
-                # console.log "felica is not found"
-                @readCard()
-                return
-            idm = felica.getIDm()
-            setTimeout @readCard, 1500
-            if idm is idmCache
-                # console.log "Same card"
-                return
-            console.log idm
-            idmCache = idmCache
-            setTimeout deleteIdmCache, 3000
-            @readData felica
-            return
+        try
+          pasori.setTimeout 100
+          pasori.polling 0xFE00, 0, (felica)=>
+              unless felica
+                  # console.log "felica is not found"
+                  @readCard()
+                  return
+              idm = felica.getIDm()
+              setTimeout @readCard, 500
+              if idm is idmCache
+                  # console.log "Same card"
+                  return
+              console.log idm
+              idmCache = idmCache
+              setTimeout deleteIdmCache, 3000
+              @readData felica
+              return
+        catch error
+          console.error e
+          @readCard()
 
     deleteIdmCache = ->
         idmCache = ""
@@ -51,7 +55,7 @@ class Card
                 number: num
                 name: name
         catch e
-            console.log e
+            console.error e
 
     sendCardData: (card)=>
         request
