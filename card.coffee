@@ -53,6 +53,7 @@ class Card
                 .filter (s)-> s isnt 0
                 .map (s)-> String.fromCharCode s
                 .join ""
+            @toneSingle 100
             @sendCardData
                 number: num
                 name: name
