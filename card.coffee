@@ -77,24 +77,24 @@ class Card
                 # left
                 @toneDelayAndDouble 500
 
-    toneStart: ->
+    toneStart: =>
         toneCount++
         wpi.softToneWrite pin, 349*4
-    toneStop: ->
+    toneStop: =>
         if toneCount is 1
           wpi.softToneWrite pin, 0
         toneCount--
-    toneSingle: (ms)->
+    toneSingle: (ms)=>
         @toneStart()
         setTimeout @toneStop, ms
     toneDelayAndSingle: (delay, ms)->
         setTimeout @toneSingle, delay
-    toneDouble: ->
+    toneDouble: =>
         @toneStart()
         setTimeout @toneStop, 100
         setTimeout @toneStart, 200
         setTimeout @toneStop, 450
-    toneDelayAndDouble: (delay)->
+    toneDelayAndDouble: (delay)=>
         setTimeout @toneDouble, delay
 
 card = new Card()
