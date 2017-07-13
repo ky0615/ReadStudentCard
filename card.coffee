@@ -88,7 +88,9 @@ class Card
         @toneStart()
         setTimeout @toneStop, ms
     toneDelayAndSingle: (delay, ms)->
-        setTimeout @toneSingle, delay
+        setTimeout =>
+          @toneSingle ms
+        , delay
     toneDouble: =>
         @toneStart()
         setTimeout @toneStop, 100
