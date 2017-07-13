@@ -72,10 +72,10 @@ class Card
             console.log res
             unless res.leftFlag
                 # now
-                @toneSingle 250
+                @toneDelayAndSingle 500, 250
             else
                 # left
-                @toneDouble()
+                @toneDelayAndDouble 500
 
     toneStart: ->
         toneCount++
@@ -87,11 +87,15 @@ class Card
     toneSingle: (ms)->
         @toneStart()
         setTimeout @toneStop, ms
+    toneDelayAndSingle: (delay, ms)->
+        setTimeout @toneSingle, delay
     toneDouble: ->
         @toneStart()
         setTimeout @toneStop, 100
         setTimeout @toneStart, 200
         setTimeout @toneStop, 450
+    toneDelayAndDouble: (delay)->
+        setTimeout @toneDouble, delay
 
 card = new Card()
 
