@@ -11,6 +11,8 @@ wpi.pinMode pin, wpi.OUTPUT
 
 wpi.softToneCreate pin
 
+delayTime = 300
+
 class Card
     idmCache = "a"
 
@@ -72,10 +74,10 @@ class Card
             console.log res
             unless res.leftFlag
                 # now
-                @toneDelayAndSingle 500, 250
+                @toneDelayAndSingle delayTime, 250
             else
                 # left
-                @toneDelayAndDouble 500
+                @toneDelayAndDouble delayTime
 
     toneStart: ->
         toneCount++
