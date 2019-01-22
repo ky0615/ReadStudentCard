@@ -4,15 +4,52 @@
   "description": "",
   "main": "card.coffee",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "precommit": "lint-staged",
+    "prebuild": "npm run clean",
+    "clean": "rimraf dist",
+    "guard": "run-p test:watch typecheck:watch",
+    "lint": "run-p lint:*",
+    "lint:script": "tslint './src/**/*.ts'",
+    "fix": "prettier --write './src/**/*.{ts,js,json,css,vue}'",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit -w"
   },
   "author": "KoutarouYabe",
   "license": "GPL-2.0",
   "dependencies": {
     "libpafe": "git+https://github.com/ky0615/node-libpafe.git",
-    "nan": "^2.4.0",
-    "request": "^2.75.0",
-    "request-promise": "^4.1.1",
-    "wiring-pi": "https://github.com/WiringPi/WiringPi-Node"
+    "nan": "^2.12.1",
+    "request": "2.88.0",
+    "request-promise": "4.2.2"
+  },
+  "lint-staged": {
+    "subTaskConcurrency": 1,
+    "linters": {
+      "*.ts": [
+        "prettier --write",
+        "tslint",
+        "git add"
+      ],
+      "*.css": [
+        "prettier --write",
+        "stylelint",
+        "git add"
+      ],
+      "*.json": [
+        "prettier --write",
+        "git add"
+      ],
+      "*.vue": [
+        "prettier --write",
+        "stylelint --config .vue.stylelintrc.js",
+        "git add"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.16.0",
+    "typescript": "^3.2.4"
   }
 }

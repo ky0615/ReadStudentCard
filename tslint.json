@@ -1,0 +1,39 @@
+{
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended", // https://github.com/palantir/tslint/blob/master/src/configs/recommended.ts
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    // コンソール禁止 無効化 babel挟むとかしてどっかではずせばよい
+    "no-console": [false],
+    // shadowed variable(包含関係にある二つのスコープで同じ名前の変数を宣言すること)を使用していないこと
+    "no-shadowed-variable": [false],
+    // 文字列はシングルクォート JSXはダブル テンプレがらみやエスケープ絡みは適当
+    "quotemark": [true, "double", "jsx-double", "avoid-template", "avoid-escape"],
+    // オブジェクトのキーをa-z順 めんどくさすぎるので無効化
+    "object-literal-sort-keys": [false],
+    // import順をa-z順 めんどくさすぎるので無効化
+    "ordered-imports": [false],
+    // interfaceはIはじまりで命名 無効化 Microsoftのクセが有る人にはそっちのほうがいいんだけど。
+    "interface-name": [false],
+    // アローファンクションの引数をカッコで括る 有効 ただし引数が1つだけの場合は無効化
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    // クラスのアクセス修飾子強制 JSに寄せるため無効化
+    "member-access": [false],
+    // クラスのメンバをa-z順 めんどくさすぎるので無効化
+    "member-ordering": [false],
+    // 変数名予約語禁止、lowerCase or UPPER_CASE、アンスコ始まりOK
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    // namespace禁止 ただし型定義の際には許可する
+    "no-namespace": [true, "allow-declarations"],
+    // ifやwhileなど{}が必要な構文は必須 ただし同一行に書いちゃう場合はスルー
+    "curly": [true, "ignore-same-line"],
+
+    /*
+     * enable prettier
+     */
+    "prettier": true
+  }
+}
