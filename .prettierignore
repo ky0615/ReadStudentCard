@@ -1,0 +1,8 @@
+dist
+node_modules
+src/static
+package.json
+tsconfig.json
+functions/node_modules
+functions/lib
+
